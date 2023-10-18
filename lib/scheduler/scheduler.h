@@ -4,4 +4,4 @@
 #include <unity.h>
 
 
-void sema_grabber_thread(struct k_sem* semToGrab, int id);
+void sema_grabber_thread(struct k_sem* semToGrab, int id, int *counter);

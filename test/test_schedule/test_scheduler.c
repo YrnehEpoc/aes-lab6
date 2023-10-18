@@ -13,6 +13,8 @@ K_THREAD_STACK_DEFINE(supervisor_stack, STACKSIZE);
 struct k_thread worker_threads[THREAD_COUNT];
 K_THREAD_STACK_ARRAY_DEFINE(worker_stacks, THREAD_COUNT, STACKSIZE);
 
+int takenNum = 0;
+
 void setUp(void)
 {
 
@@ -25,9 +27,8 @@ void setUp(void)
                         worker_stacks[t],
                         STACKSIZE,
                         (k_thread_entry_t) sema_grabber_thread,
-                        &semaphore,
-                        t,
-                        K_PRIO_COOP(0,
+                        &semaphore, t, &takenNum,
+                        K_PRIO_COOP(0),
                         0,
                         K_MSEC(HIPRIDELAY));
         }
@@ -37,9 +38,8 @@ void setUp(void)
                         worker_stacks[t],
                         STACKSIZE,
                         (k_thread_entry_t) sema_grabber_thread,
-                        &semaphore,
-                        t,
-                        K_PRIO_COOP(1,
+                        &semaphore, t, &takenNum,
+                        K_PRIO_COOP(1),
                         0,
                         K_NO_WAIT);
         }
@@ -59,7 +59,7 @@ void tearDown(void)
 }
 
 void test_grab(void){
-
+    TEST_ASSERT_EQUAL(1,takenNum);
 }
 
 int main (void)
