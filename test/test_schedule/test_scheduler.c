@@ -4,7 +4,7 @@
 #include "scheduler.h"
 
 #define STACKSIZE 2000
-#define HIPRIDELAY 500
+#define HIPRIDELAY 1000
 #define THREAD_COUNT 2
 
 struct k_thread supervisor_thread;
