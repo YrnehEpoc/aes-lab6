@@ -22,7 +22,7 @@ void setUp(void)
     k_sem_init(&semaphore, 0, 1);
 
     for (int t = 0; t < THREAD_COUNT; t++) {
-        if (t = 0){
+        if (t == 0){
         k_thread_create(&worker_threads[t],
                         worker_stacks[t],
                         STACKSIZE,
@@ -32,8 +32,8 @@ void setUp(void)
                         0,
                         K_MSEC(HIPRIDELAY));
         }
-        else{
-
+        else
+        {
         k_thread_create(&worker_threads[t],
                         worker_stacks[t],
                         STACKSIZE,
