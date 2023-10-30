@@ -7,9 +7,6 @@
 #define HIPRIDELAY 1000
 #define THREAD_COUNT 2
 
-struct k_thread supervisor_thread;
-K_THREAD_STACK_DEFINE(supervisor_stack, STACKSIZE);
-
 struct k_thread worker_threads[THREAD_COUNT];
 K_THREAD_STACK_ARRAY_DEFINE(worker_stacks, THREAD_COUNT, STACKSIZE);
 

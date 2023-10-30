@@ -31,8 +31,8 @@ void tearDown(void)
 
 void preempt_busy_busy_equal(void){
     char myName[] = "Henry";
-    k_thread_runtime_stats_t start_stats;
-    k_thread_runtime_stats_all_get(&start_stats);
+    k_thread_runtime_stats_t init_stats;
+    k_thread_runtime_stats_all_get(&init_stats);
     for (int t = 0; t < THREAD_COUNT; t++) {
         if (t == 0){
         k_thread_create(&worker_threads[t],
@@ -46,8 +46,8 @@ void preempt_busy_busy_equal(void){
         }
     }
     
-    k_thread_runtime_stats_get(k_current_get(),&rt_stats_thread);
-    printk("Cycles: %llu\n", rt_stats_thread.execution_cycles);
+    //k_thread_runtime_stats_get(k_current_get(),&rt_stats_thread);
+    printk("Cycles: %llu\n", init_stats);
 }
 
 
