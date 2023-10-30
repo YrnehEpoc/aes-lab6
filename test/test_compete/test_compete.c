@@ -30,6 +30,7 @@ void tearDown(void)
 }
 
 void preempt_busy_busy_equal(void){
+    //add metaIRQ for cancelling stuck threads
     char myName[] = "Henry";
     k_thread_runtime_stats_t init_stats;
     k_thread_runtime_stats_all_get(&init_stats);

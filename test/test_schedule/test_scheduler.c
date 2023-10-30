@@ -51,6 +51,7 @@ void tearDown(void)
     
     for (int t = 0; t < THREAD_COUNT; t++) {
         k_thread_abort(&worker_threads[t]);
+        printk("Made it here");
     }
 
 }
@@ -65,5 +66,6 @@ int main (void)
     UNITY_BEGIN();
 
     RUN_TEST(test_grab);
+    printk("made it to this point");
     return UNITY_END();
 }
