@@ -61,7 +61,7 @@ void run_threads(
                     NULL, NULL, NULL,
                     t1_prio,
                     0,
-                    K_MSEC(10)); 
+                    K_MSEC(1)); 
     
     
     k_thread_create(&thread2,
@@ -71,7 +71,7 @@ void run_threads(
                     NULL, NULL, NULL,
                     t2_prio,
                     0,
-                    K_MSEC(15)); 
+                    K_MSEC(10)); 
     
     k_thread_join(&supervisor, K_MSEC(150));
     
@@ -84,13 +84,89 @@ void run_threads(
 
 
 
+void coop_busy_busy_equal(void){ 
+    run_threads("preempt_busy_busy_equal",
+        busy_busy, K_PRIO_COOP(1),
+        busy_busy, K_PRIO_COOP(1)
+    );
+}
+void coop_busy_yield_equal(void){ 
+    run_threads("preempt_busy_yield_equal",
+        busy_yield, K_PRIO_PREEMPT(1),
+        busy_yield, K_PRIO_PREEMPT(1)
+    );
+} 
 void preempt_busy_busy_equal(void){ 
     run_threads("preempt_busy_busy_equal",
         busy_busy, K_PRIO_PREEMPT(1),
         busy_busy, K_PRIO_PREEMPT(1)
     );
 }
+void preempt_busy_yield_equal(void){ 
+    run_threads("preempt_busy_yield_equal",
+        busy_yield, K_PRIO_PREEMPT(1),
+        busy_yield, K_PRIO_PREEMPT(1)
+    );
+} 
 
+
+void coop_busy_busy_diff_hipriFirst(void){ 
+    run_threads("coop_busy_busy_diff_hipriFirst",
+        busy_busy, K_PRIO_COOP(1),
+        busy_busy, K_PRIO_COOP(2)
+    );
+}
+void coop_busy_busy_diff_lopriFirst(void){ 
+    run_threads("coop_busy_busy_diff_lopriFirst",
+        busy_busy, K_PRIO_COOP(2),
+        busy_busy, K_PRIO_COOP(1)
+    );
+}
+void coop_busy_yield_diff_hipriFirst(void){ 
+    run_threads("coop_busy_yield_diff_hipriFirst",
+        busy_yield, K_PRIO_COOP(1),
+        busy_yield, K_PRIO_COOP(2)
+    );
+}
+void coop_busy_yield_diff_lopriFirst(void){ 
+    run_threads("coop_busy_yield_diff_lopriFirst",
+        busy_yield, K_PRIO_COOP(2),
+        busy_yield, K_PRIO_COOP(1)
+    );
+}
+
+ 
+void preempt_busy_busy_diff_hipriFirst(void){ 
+    run_threads("preempt_busy_busy_diff_hipriFirst",
+        busy_busy, K_PRIO_COOP(1),
+        busy_busy, K_PRIO_COOP(2)
+    );
+}
+void preempt_busy_busy_diff_lopriFirst(void){ 
+    run_threads("preempt_busy_busy_diff_lopriFirst",
+        busy_busy, K_PRIO_COOP(2),
+        busy_busy, K_PRIO_COOP(1)
+    );
+}
+void preempt_busy_yield_diff_hipriFirst(void){ 
+    run_threads("preempt_busy_yield_diff_hipriFirst",
+        busy_yield, K_PRIO_COOP(1),
+        busy_yield, K_PRIO_COOP(2)
+    );
+}
+void preempt_busy_yield_diff_lopriFirst(void){ 
+    run_threads("preempt_busy_yield_diff_lopriFirst",
+        busy_yield, K_PRIO_COOP(2),
+        busy_yield, K_PRIO_COOP(1)
+    );
+}
+
+void test_busy_sleep(void){ 
+    run_threads("busy_sleep",
+        busy_sleep, K_PRIO_COOP(1),
+        busy_yield, K_PRIO_COOP(2)
+    );
+}
 
 int main (void)
 {
@@ -98,16 +174,18 @@ int main (void)
     UNITY_BEGIN();
 
     RUN_TEST(preempt_busy_busy_equal);
-    // RUN_TEST(coop_equal_busy_busy); 
-    // RUN_TEST(coop_equal_busy_yield);
-    // RUN_TEST(preempt_equal_busy_yield);
-    // RUN_TEST(coop_high_busy_busy);
-    // RUN_TEST(coop_low_busy_busy);
-    // RUN_TEST(coop_high_busy_yield);
-    // RUN_TEST(coop_low_busy_yield);
-    // RUN_TEST(preempt_high_busy_busy);
-    // RUN_TEST(preempt_low_busy_busy);
-    // RUN_TEST(preempt_high_busy_yield);
-    // RUN_TEST(preempt_low_busy_yield);
+    RUN_TEST(coop_busy_yield_equal); 
+    RUN_TEST(preempt_busy_busy_equal);
+    RUN_TEST(preempt_busy_yield_equal);
+    RUN_TEST(coop_busy_busy_diff_hipriFirst);
+    RUN_TEST(coop_busy_busy_diff_lopriFirst);
+    RUN_TEST(coop_busy_yield_diff_hipriFirst);
+    RUN_TEST(coop_busy_yield_diff_lopriFirst);
+    RUN_TEST(preempt_busy_busy_diff_hipriFirst);
+    RUN_TEST(preempt_busy_busy_diff_lopriFirst);
+    RUN_TEST(preempt_busy_yield_diff_hipriFirst);
+    RUN_TEST(preempt_busy_yield_diff_lopriFirst);
+
+    RUN_TEST(test_busy_sleep);
     return UNITY_END();
 }
