@@ -3,6 +3,7 @@ We evaluated scheduling.
 
 ## Activity 0
 
+![alt](act0.png)
 
 ## Activity 1
 For coop busy_busy we guessed that the second thread would never run. 
