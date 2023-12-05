@@ -16,7 +16,9 @@ For preemp busy_busy different priority we guessed that the second thread would 
 For preempt busy_yield different priority we guessed that the second thread would run once the first thread became unready if it was lower priority and would run as soon as it came online if it was higher priority.
 
 
-![alt](tests.png)
+![alt](act1.png)
 
 
 ## Activity 2
+
+![alt](act2.png)
