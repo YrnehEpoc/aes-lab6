@@ -25,7 +25,9 @@ void setUp(void)
 
 void tearDown(void)
 {
-
+    
+    k_thread_abort(&thread1);
+    k_thread_abort(&thread2);
 }
 
 
